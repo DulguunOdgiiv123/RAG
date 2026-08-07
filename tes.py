@@ -1,5 +1,6 @@
+import numpy as np 
 from sentence_transformers import SentenceTransformer
-import numpy as np
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 documents = [
@@ -28,8 +29,7 @@ documents = [
     "Regular strength training helps preserve bone density with age.",
     "Chronic stress can elevate cortisol levels over time.",
 ]
-doc_embeddings = model.encode(documents)  
-
+document_embedding = model.encode(documents)
 
 def cosine_similarity(a,b):
     dot = np.dot(a,b)
@@ -37,18 +37,15 @@ def cosine_similarity(a,b):
     magnitude_b = np.linalg.norm(b)
     return dot/(magnitude_a*magnitude_b)
 
-def search(query, documents, doc_embeddings, top_k=3):
+def search(query,documents,document_embedding,top_k = 3):
     query_embedding = model.encode(query)
-
-    scores = []
+    score = []
     for i in range(len(documents)):
-        sim = cosine_similarity(query_embedding,doc_embeddings[i])
-        scores.append((documents[i],sim))
-    scores.sort(key= lambda x: x[1],reverse = True)
-    return scores[:top_k]
+        sim = cosine_similarity(query_embedding,document_embedding[i])
+        score.append((documents[i],sim))
+    score.sort(key =lambda x: x[1],reverse=True)
+    return score[:top_k]
 
-result = search("What foods help you sleep better?", documents,doc_embeddings,top_k=3)
-for doc,score in result:
-    print(f"{score:.4} {doc}")
-        
-
+result = search("Here is query about running and health",documents,document_embedding,top_k=3)
+for doc,sc in result:
+    print(f"{sc:.4f} {doc}")
