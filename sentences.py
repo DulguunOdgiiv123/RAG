@@ -14,22 +14,14 @@ sentences = [
 embeddings = model.encode(sentences)
 
 def cosine_similarity(a, b):
-    # write this yourself — dot product over product of norms
-    #
-    dot_product = np.dot(a,b)
+    dot = np.dot(a,b)
     magnitude_a = np.linalg.norm(a)
     magnitude_b = np.linalg.norm(b)
+    return dot / (magnitude_a*magnitude_b)
 
-    
-    cosine = dot_product / (magnitude_a * magnitude_b)
-    return cosine
-
-
-
-# compute and print pairwise similarity for every pair
-for i in range(len(sentences)):
-    for j in range(i + 1, len(sentences)):
-        sim = cosine_similarity(embeddings[i], embeddings[j])
-        print(f"[{i}] \"{sentences[i]}\"")
-        print(f"[{j}] \"{sentences[j]}\"")
-        print(f"similarity: {sim:.4f}\n")
+for i in range (len(sentences)):
+    for j in range(i+1,len(sentences)):
+        cosine = cosine_similarity(embeddings[i],embeddings[j])
+        print(sentences[i])
+        print(sentences[j])
+        print(cosine)
