@@ -32,8 +32,6 @@ collection.add(documents=documents,
                ids=[str(i) for i in range(len(documents))]
                )
 
-print(collection.count())
-
 result = collection.query(
     query_texts = ["What food helps you sleep better ?"],
     n_results = 3
