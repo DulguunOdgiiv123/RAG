@@ -1,0 +1,27 @@
+[project]
+name = "ragqa"
+version = "0.1.0"
+description = "Local RAG Q&A system over your own corpus, running entirely on Ollama."
+requires-python = ">=3.10"
+dependencies = [
+    "chromadb>=0.5.0",
+    "ollama>=0.3.0",
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "pypdf>=4.2.0",
+    "pydantic>=2.7.0",
+    "rich>=13.7.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0", "pytest-cov>=5.0.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
